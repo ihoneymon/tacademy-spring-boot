@@ -1,0 +1,179 @@
+def javaProjects = [project(":common"), project(":core"), project(":api"), project(":admin"), project(":batch")]
+def springBootProjects = [project(":common"), project(":core"), project(":api"), project(":admin"), project(":batch")]
+def requiredIntegrationTestProjects = [project(":api"), project(":admin"), project(":batch")]
+def querydslProjects = [project(":api"), project(":admin"), project(":batch")]
+
+/**
+ * 프로젝트에서 사용할 바이너리 플러그인 정의
+ * @see <a href="https://plugins.gradle.org">https://plugins.gradle.org</a>
+ */
+buildscript {
+    ext {
+        springBootVersion = '2.0.4.RELEASE'
+        querydslVersion = "1.0.10"
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslVersion}")
+    }
+}
+
+/**
+ * 하위프로젝트 공통선언
+ */
+subprojects {
+    group = 'io.honeymon.springboot'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+
+
+configure(javaProjects) {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+    compileJava.options.encoding = 'UTF-8'
+}
+
+configure(springBootProjects) {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    bootJar.enabled = true
+
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-logging')
+
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+    }
+}
+
+configure(requiredIntegrationTestProjects) {
+    apply plugin: 'java'
+
+    sourceSets {
+        integrationTest {
+            java.srcDir file("src/integration-test/java")
+            resources.srcDir file("src/integration-test/resources")
+
+            compileClasspath = sourceSets.main.output + configurations.testRuntime
+            runtimeClasspath = output + compileClasspath
+        }
+    }
+
+    dependencies {
+        testCompile "org.dbunit:dbunit:2.5.2"
+        testCompile "com.github.springtestdbunit:spring-test-dbunit:1.3.0"
+    }
+
+    task integrationTest(type: Test) {
+        testClassesDirs = sourceSets.integrationTest.output.classesDirs
+        classpath = sourceSets.integrationTest.runtimeClasspath
+    }
+
+    check.dependsOn integrationTest
+}
+
+/**
+ * <Code>@Entity</code> 객체를 찾아서 QueryDSL로 컴파일하여 엔티티맵으로 사용할 수 있게 해줌
+ * @see <a href="https://github.com/ewerk/gradle-plugins/tree/master/querydsl-plugin">Querydsl Plugin</a>
+ */
+configure(querydslProjects) {
+    apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
+    def querydslDir = "src/querydsl/java"
+    querydsl {
+        jpa = true
+        querydslSourcesDir = querydslDir
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDir querydslDir
+            }
+        }
+    }
+}
+
+
+
+project(":common") {
+    description = "프로젝트 공통 모듈: 유틸리티, 기타 DTO 등 제공"
+
+    version = '0.0.1-SNAPSHOT'
+
+    bootJar.enabled = false
+
+    dependencies {
+        compile('org.projectlombok:lombok')
+        compile('org.springframework:spring-context')
+    }
+}
+
+project(":core") {
+    description = "프로젝트 코어 모듈: 도메인(Entity, Repository), 서비스 정의"
+
+    version = '0.0.1-SNAPSHOT'
+
+    bootJar.enabled = false
+
+    dependencies {
+        compile project(":common")
+
+        compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
+        runtime('org.springframework.boot:spring-boot-devtools')
+        runtime('com.h2database:h2')
+        runtime('mysql:mysql-connector-java')
+
+        compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+    }
+}
+
+project(":api") {
+    description = "외부 노출 API 모듈: @RestController 이용"
+
+    version = '0.0.1-SNAPSHOT'
+
+    dependencies {
+        compile project(":core")
+
+        compile('org.springframework.boot:spring-boot-starter-web')
+
+        testCompile('org.springframework.restdocs:spring-restdocs-mockmvc') // API 문서 제공
+    }
+}
+
+project(":admin") {
+    description = "관리자 애플리케이션: 백오피스(BackOffice) 이용"
+
+    version = '0.0.1-SNAPSHOT'
+
+    dependencies {
+        compile project(":core")
+
+        compile('org.springframework.boot:spring-boot-starter-web')
+
+        testCompile('org.springframework.restdocs:spring-restdocs-mockmvc') // API 문서 제공
+    }
+}
+
+project(":batch") {
+    description = "배치"
+
+    version = '0.0.1-SNAPSHOT'
+
+    bootJar.enabled = false
+}

@@ -1,0 +1,8 @@
+rootProject.name = 'tacademy-book-store'
+
+include "core"
+include "common"
+include "api"
+include "web"
+include "admin"
+include "batch"
