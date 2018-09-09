@@ -1,0 +1,68 @@
+= BookStore24
+honeymon,<ihoneymon@gmail.com>
+v0.0.1, 2018/09/20
+
+== 실행방법
+.프로젝트 복제 및 빌드
+[source,console]
+----
+$ git clone git@github.com:ihoneymon/tacademy-spring-boot.git
+$ cd tacademy-spring-boot
+$ ./gradlew clean build
+----
+
+[NOTE]
+====
+정상적으로 빌드가 진행될 경우는 
+
+[source,console]
+----
+> Task :api:integrationTest
+2018-09-09 22:21:40.369  INFO 19059 --- [       Thread-6] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@1f506371: startup date [Sun Sep 09 22:21:38 KST 2018]; root of context hierarchy
+2018-09-09 22:21:40.371  INFO 19059 --- [       Thread-6] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-09-09 22:21:40.371  INFO 19059 --- [       Thread-6] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed drop of schema as part of SessionFactory shut-down'
+2018-09-09 22:21:40.378  WARN 19059 --- [       Thread-6] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-197]
+2018-09-09 22:21:40.378  INFO 19059 --- [       Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2018-09-09 22:21:40.379  INFO 19059 --- [       Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 5.0.
+See https://docs.gradle.org/4.8.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 7s
+27 actionable tasks: 24 executed, 3 up-to-date
+➜  tacademy-book-store git:(master) ✗
+----
+
+와 같은 메시지를 볼 수 있다. 
+====
+
+=== API 실행방법
+[source,console]
+----
+$ cd api
+$ java -jar build/libs/api-0.0.1-SNAPSHOT.jar
+----
+
+.API 실행확인
+[source,console]
+----
+$ http -v GET localhost:8080/books
+----
+
+=== ADMIN 실행방법 
+[source,console]
+----
+$ cd admin
+$ java -jar build/libs/admin-0.0.1-SNAPSHOT.jar
+----
+
+.ADMIN 실행확인
+[source,console]
+----
+$ wget localhost:8080/hello
+----
+
+== 참고문헌
+* link:https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html[Spring Framework Documentation]
+* link:https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[Spring Boot Reference Guide]
+* link:https://docs.spring.io/spring-data/jpa/docs/current/reference/html/[Spring Data JPA - Reference Documentation]
