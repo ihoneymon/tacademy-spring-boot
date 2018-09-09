@@ -2,6 +2,7 @@ def javaProjects = [project(":common"), project(":core"), project(":api"), proje
 def springBootProjects = [project(":common"), project(":core"), project(":api"), project(":admin"), project(":batch")]
 def requiredIntegrationTestProjects = [project(":api"), project(":admin"), project(":batch")]
 def querydslProjects = [project(":api"), project(":admin"), project(":batch")]
+def requiredWebSecurity = [project(":api"), project(":admin")]
 
 /**
  * 프로젝트에서 사용할 바이너리 플러그인 정의
@@ -83,6 +84,12 @@ configure(requiredIntegrationTestProjects) {
     }
 
     check.dependsOn integrationTest
+}
+
+configure(requiredWebSecurity) {
+//	dependencies {
+//        compile("org.springframework.boot:spring-boot-starter-security")
+//    }
 }
 
 /**
