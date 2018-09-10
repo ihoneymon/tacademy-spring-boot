@@ -2,4 +2,7 @@
 honeymon, <ihoneymon@gmail.com>
 v0.0.1, 2018-09-10
 
+:toc: left
+:toc-level: 3
+
 include::books.adoc[]
