@@ -1,7 +1,7 @@
 def javaProjects = [project(":common"), project(":core"), project(":api"), project(":admin"), project(":batch")]
 def springBootProjects = [project(":common"), project(":core"), project(":api"), project(":admin"), project(":batch")]
 def requiredIntegrationTestProjects = [project(":api"), project(":admin"), project(":batch")]
-def querydslProjects = [project(":api"), project(":admin"), project(":batch")]
+def querydslProjects = [project(":core")]
 def requiredWebSecurity = [project(":api"), project(":admin")]
 
 /**
@@ -27,6 +27,10 @@ buildscript {
     }
 }
 
+ext {
+    lombokVer = "1.18.2"
+}
+
 /**
  * 하위프로젝트 공통선언
  */
@@ -37,7 +41,6 @@ subprojects {
         mavenCentral()
     }
 }
-
 
 
 configure(javaProjects) {
@@ -54,6 +57,12 @@ configure(springBootProjects) {
     apply plugin: 'io.spring.dependency-management'
 
     bootJar.enabled = true
+
+    dependencyManagement { // 스프링 부트에서 관리하는 의존성 라이브러리 버전변경
+        dependencies {
+            dependency "org.projectlombok:lombok:${lombokVer}"
+        }
+    }
 
     dependencies {
         compile('org.springframework.boot:spring-boot-starter-logging')
@@ -124,6 +133,7 @@ project(":common") {
     version = '0.0.1-SNAPSHOT'
 
     bootJar.enabled = false
+    jar.enabled = true
 
     dependencies {
         compile('org.projectlombok:lombok')
@@ -170,14 +180,14 @@ project(":api") {
     ext { 
 		snippetsDir = file('build/generated-snippets')
 	}
-	
-	test { 
+
+    integrationTest {
 		outputs.dir snippetsDir
 	}
 	
 	asciidoctor { 
 		inputs.dir snippetsDir
-		dependsOn test
+		dependsOn integrationTest
 		attributes 'snippets': "${snippetsDir}"
 	}
 	
