@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.honeymon.springboot.t.bookstore.api.service.book.BookService;
+import lombok.NoArgsConstructor;
 
 @RestController
 @RequestMapping("/books")
+@NoArgsConstructor
 public class BookController {
 
 	private BookService service;

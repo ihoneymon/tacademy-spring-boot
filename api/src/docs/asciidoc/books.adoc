@@ -1,0 +1,9 @@
+[[books]]
+== Book(`/books`) API
+도서 관련 API로서 기본적으로 ``Content-Type: application/json;``으로 요청을 처리한다.
+
+=== ``OPTIONS /books``
+Book API에서 지원하는 메서드 유형을 확인하는 용도로 사용할 수 있다.
+
+include::{snippets}/books/curl-request.adoc[]
+include::{snippets}/books/httpie-request.adoc[]

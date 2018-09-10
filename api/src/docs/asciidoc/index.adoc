@@ -1,0 +1,5 @@
+= T BookStore24 API Documentation
+honeymon, <ihoneymon@gmail.com>
+v0.0.1, 2018-09-10
+
+include::books.adoc[]

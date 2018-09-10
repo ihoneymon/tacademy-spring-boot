@@ -12,6 +12,7 @@ buildscript {
     ext {
         springBootVersion = '2.0.4.RELEASE'
         querydslVersion = "1.0.10"
+        asciidocGradleVersion = '1.5.8.1'
     }
     repositories {
         mavenCentral()
@@ -22,6 +23,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslVersion}")
+        classpath("org.asciidoctor:asciidoctor-gradle-plugin:${asciidocGradleVersion}")
     }
 }
 
@@ -151,7 +153,8 @@ project(":core") {
 }
 
 project(":api") {
-    description = "외부 노출 API 모듈: @RestController 이용"
+    description = "외부 노출 API 모듈: @RestController 이용"    
+    apply plugin: "org.asciidoctor.convert"
 
     version = '0.0.1-SNAPSHOT'
 
@@ -161,7 +164,29 @@ project(":api") {
         compile('org.springframework.boot:spring-boot-starter-web')
 
         testCompile('org.springframework.restdocs:spring-restdocs-mockmvc') // API 문서 제공
+        asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor' 
     }
+    
+    ext { 
+		snippetsDir = file('build/generated-snippets')
+	}
+	
+	test { 
+		outputs.dir snippetsDir
+	}
+	
+	asciidoctor { 
+		inputs.dir snippetsDir
+		dependsOn test
+		attributes 'snippets': "${snippetsDir}"
+	}
+	
+	bootJar {
+		dependsOn asciidoctor 
+		from ("${asciidoctor.outputDir}/html5") { 
+			into 'static/docs'
+		}
+	}
 }
 
 project(":admin") {

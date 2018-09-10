@@ -66,3 +66,4 @@ $ wget localhost:8080/hello
 * link:https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html[Spring Framework Documentation]
 * link:https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[Spring Boot Reference Guide]
 * link:https://docs.spring.io/spring-data/jpa/docs/current/reference/html/[Spring Data JPA - Reference Documentation]
+* link:https://asciidoctor.org/docs/asciidoctor-gradle-plugin/[Asciidoctor Gradle Plugin]
