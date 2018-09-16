@@ -11,6 +11,6 @@ import java.io.IOException;
 public class AdminAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        response.sendRedirect("/login");
+        response.sendRedirect("/login?error=" + exception.getMessage());
     }
 }

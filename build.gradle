@@ -153,6 +153,7 @@ project(":core") {
         compile project(":common")
 
         compile('org.springframework.boot:spring-boot-starter-data-jpa')
+        compile("org.flywaydb:flyway-core")
 
         runtime('org.springframework.boot:spring-boot-devtools')
         runtime('com.h2database:h2')

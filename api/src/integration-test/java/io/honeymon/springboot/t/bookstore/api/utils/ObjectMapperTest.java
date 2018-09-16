@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.honeymon.springboot.t.bookstore.core.domain.book.Book;
 import org.junit.Test;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 public class ObjectMapperTest {
 
     @Test

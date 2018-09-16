@@ -2,7 +2,6 @@ spring:
   profiles:
     include:
       - datasource
-
 ---
 spring.profiles: local
 
