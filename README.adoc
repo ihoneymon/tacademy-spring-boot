@@ -2,6 +2,15 @@
 honeymon,<ihoneymon@gmail.com>
 v0.0.1, 2018/09/20
 
+:bs24: BookStore24
+
+== 프로젝트 개요
+{bs24}는 도서판매 온라인서비스다. 이 서비스... 블라블라....
+
+* API: 웹 및 앱에서 자원(Resource)을 RESTful하게 사용할 수 있도록 제공
+* WEB: API를 호출하여 사용자에게 도서정보 제공
+* ADMIN: 도서정보, 유형 및 고객관리 백오피스
+
 == 실행방법
 .프로젝트 복제 및 빌드
 [source,console]
@@ -61,6 +70,8 @@ $ java -jar build/libs/admin-0.0.1-SNAPSHOT.jar
 ----
 $ wget localhost:8080/hello
 ----
+
+== 의존성
 
 == 참고문헌
 * link:https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html[Spring Framework Documentation]

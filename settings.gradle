@@ -1,8 +1,22 @@
 rootProject.name = 'tacademy-book-store'
 
-include "core"
+/**
+ * 유틸리티 등 모듈 공통 기능 제공
+ */
 include "common"
+/**
+ * JPA를 기반으로 구축된 도메인(@Entity, @Repository) 및 데이터베이스 구성
+ */
+include "core"
+/**
+ * 외부 노출 
+ */
 include "api"
-include "web"
+/**
+ * 서비스 관리 시스템(백오피스)
+ */
 include "admin"
+/**
+ * TODO 정산, 통계 등의 데이터 처리작업 담당
+ */
 include "batch"
