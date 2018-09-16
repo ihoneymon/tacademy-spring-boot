@@ -31,7 +31,9 @@ public class QBook extends EntityPathBase<Book> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath isbn = createString("isbn");
+    public final StringPath isbn10 = createString("isbn10");
+
+    public final StringPath isbn13 = createString("isbn13");
 
     public final io.honeymon.springboot.t.bookstore.core.domain.admin.QAdmin lastModifiedBy;
 

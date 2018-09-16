@@ -21,4 +21,8 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> ok(T data) {
         return new ApiResponse<>("0000", null, data);
     }
+
+    public static <T> ApiResponse<T> error(String message) {
+        return new ApiResponse<>("9999", message, null);
+    }
 }

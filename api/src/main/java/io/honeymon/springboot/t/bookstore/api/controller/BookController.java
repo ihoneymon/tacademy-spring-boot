@@ -14,10 +14,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/books")
-@NoArgsConstructor
 public class BookController {
 
-    private BookService service;
+    private final BookService service;
 
     public BookController(BookService service) {
         this.service = service;
@@ -48,13 +47,13 @@ public class BookController {
     @RequestMapping(value = "/{id}", method = RequestMethod.HEAD)
     public ResponseEntity<?> head(@PathVariable Long id) {
         return service.findById(id).map(exists -> ResponseEntity.noContent().build())
-                .orElseThrow(() -> new BookNotFoundException("Book(" + id + ") not found."));
+                .orElseThrow(() -> new BookNotFoundException(String.format("Book(%d) not found.", id)));
     }
 
     @GetMapping("/{id}")
     public ApiResponse<Book> get(@PathVariable Long id) {
         return this.service.findById(id).map(ApiResponse::ok)
-                .orElseThrow(() -> new BookNotFoundException("Book(" + id + ") not found."));
+                .orElseThrow(() -> new BookNotFoundException(String.format("Book(%d) not found.", id)));
     }
 
 }
