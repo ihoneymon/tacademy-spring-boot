@@ -1,16 +1,21 @@
-package io.honeymon.springboot.t.bookstore.api.controller;
+package io.honeymon.springboot.t.bookstore.api.controller.book;
+
+import java.util.List;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.honeymon.springboot.t.bookstore.api.common.OffSetPageRequest;
 import io.honeymon.springboot.t.bookstore.api.service.book.BookService;
 import io.honeymon.springboot.t.bookstore.core.common.api.ApiResponse;
 import io.honeymon.springboot.t.bookstore.core.common.exceptions.BookNotFoundException;
 import io.honeymon.springboot.t.bookstore.core.domain.book.Book;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/books")

@@ -189,7 +189,8 @@ project(":api") {
 	asciidoctor { 
 		inputs.dir snippetsDir
 		dependsOn integrationTest
-		attributes 'snippets': "${snippetsDir}"
+		attributes 'snippets': "${snippetsDir}", 'doctype': 'book', 'page-layout': 'docs', 
+			'toc': 'left', 'toclevels': '4', 'source-highlighter': 'coderay'
 	}
 	
 	bootJar {
