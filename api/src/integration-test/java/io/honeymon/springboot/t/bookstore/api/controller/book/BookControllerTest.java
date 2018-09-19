@@ -1,6 +1,8 @@
 package io.honeymon.springboot.t.bookstore.api.controller.book;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,7 +37,7 @@ import io.honeymon.springboot.t.bookstore.core.domain.book.Book;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = DEFINED_PORT, properties = {"server.port=9090"})
 public class BookControllerTest {
     private MockMvc mockMvc;
     @Rule

@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import org.hamcrest.core.Is;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +36,7 @@ import io.honeymon.springboot.t.bookstore.api.service.category.CategoryService;
 import io.honeymon.springboot.t.bookstore.core.domain.book.Book;
 import io.honeymon.springboot.t.bookstore.core.domain.category.Category;
 
+@Ignore
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest
