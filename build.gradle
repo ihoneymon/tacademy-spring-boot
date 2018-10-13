@@ -51,6 +51,10 @@ configure(javaProjects) {
 
     sourceCompatibility = 1.8
     compileJava.options.encoding = 'UTF-8'
+    
+    dependencies {
+    	compile "javax.xml.bind:jaxb-api"
+    }
 }
 
 configure(springBootProjects) {
